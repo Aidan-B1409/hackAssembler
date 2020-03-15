@@ -80,15 +80,16 @@ public class Main {
 
     private static String[] splitStrings(String instruction){
         String[] output = new String[]{null, null, null};
-        String split1[] = instruction.split("=");
-        String split2[] = split1[1].split(";");
-        try {
-            output[0] = split1[0];
-            output[1] = split2[0];
-            output[2] = split2[1];
+        String split[] = instruction.split("=|;");
+        if(instruction.contains("=")){
+            output[0] = split[0];
+            output[1] = split[1];
+            output[2] = null;
         }
-        catch(ArrayIndexOutOfBoundsException e){
-
+        if(instruction.contains(";")){
+            output[0] = null;
+            output[1] = split[0];
+            output[2] = split[1];
         }
         return output;
     }
