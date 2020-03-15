@@ -1,7 +1,6 @@
 package src.main;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Parser {
@@ -25,22 +24,25 @@ public class Parser {
             System.out.println("i got here!");
             String line;
             //PASS 1: Gather Labels
-//            while((line = br.readLine()) != null){
-//                //skip whitespace and comments
-//                if((line.length() == 0) ||(line.charAt(0) == '/')){
-//                    continue;
-//                }
-//                if(line.charAt(0) == '('){
-//                    String label = line.replaceAll("[(),\\s+]", "");
-//                    labelMap.add
-//                }
-//          }
-            while((line = br.readLine()) != null) {
+            int i = 0;
+            while((line = br.readLine()) != null){
+                //skip whitespace and comments
                 if((line.length() == 0) ||(line.charAt(0) == '/')){
+                    continue;
+                }
+                if(line.charAt(0) == '('){
+                    String label = line.replaceAll("[(),\\s+]", "");
+                    labelMap.put(label,i);
+                }
+                i++;
+          }
+            while((line = br.readLine()) != null) {
+                if((line.length() == 0) ||(line.charAt(0) == '/') || (line.charAt(0) == '(')){
                     continue;
                 }
                 wr.println(parseInstruction(line));
             }
+            System.out.println(labelMap);
         }
         catch(IOException e){
             System.out.println("Error: Could not find file");
