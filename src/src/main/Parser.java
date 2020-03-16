@@ -54,7 +54,7 @@ public class Parser {
 
     private String parseInstruction(String assemblyInstruction) {
         //remove whitespace
-        System.out.println(assemblyInstruction);
+        //System.out.println(assemblyInstruction);
         assemblyInstruction = assemblyInstruction.trim();
         assemblyInstruction = assemblyInstruction.replaceAll("\"(?m)^[ \\t]*\\r?\\n\", \"\"\n", "");
         //Standardize Charachters
