@@ -24,7 +24,7 @@ public class Parser {
             String line;
             //PASS 1: Gather Labels
             int i = 0;
-            br.mark(10000);
+            br.mark(1000000);
             while((line = br.readLine()) != null){
                 line = cleanString(line);
                 //skip whitespace
