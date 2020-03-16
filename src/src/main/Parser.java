@@ -21,31 +21,33 @@ public class Parser {
         buildHashMaps();
         String hackName = file.getName().substring(0,file.getName().length()-4) + ".hack";
         try (PrintWriter wr = new PrintWriter(hackName, "UTF-8"); BufferedReader br = new BufferedReader(new FileReader(file))) {
-            System.out.println("i got here!");
             String line;
             //PASS 1: Gather Labels
             int i = 0;
+            br.mark(10000);
             while((line = br.readLine()) != null){
-                //skip whitespace and comments
-                if((line.length() == 0) ||(line.charAt(0) == '/')){
+                line = cleanString(line);
+                //skip whitespace
+                if((line.length() == 0)){
                     continue;
                 }
                 if(line.charAt(0) == '('){
-                    String label = line.replaceAll("[(),\\s+]", "");
+                    String label = line.replaceAll("[()]", "");
                     labelMap.put(label,i);
                 }
                 i++;
           }
+            br.reset();
             while((line = br.readLine()) != null) {
-                if((line.length() == 0) ||(line.charAt(0) == '/') || (line.charAt(0) == '(')){
+                line = cleanString(line);
+                if((line.length() == 0)|| (line.charAt(0) == '(')){
                     continue;
                 }
                 wr.println(parseInstruction(line));
             }
-            System.out.println(labelMap);
         }
         catch(IOException e){
-            System.out.println("Error: Could not find file");
+            System.out.println(e + "Error: Could not find file");
         }
     }
 
@@ -53,6 +55,7 @@ public class Parser {
     private String parseInstruction(String assemblyInstruction) {
         //remove whitespace
         System.out.println(assemblyInstruction);
+        assemblyInstruction = assemblyInstruction.trim();
         assemblyInstruction = assemblyInstruction.replaceAll("\"(?m)^[ \\t]*\\r?\\n\", \"\"\n", "");
         //Standardize Charachters
         assemblyInstruction = assemblyInstruction.toUpperCase();
@@ -71,8 +74,15 @@ public class Parser {
 
     private String parseAInstruction(String assemblyInstruction){
         int addressNumber;
+        String addressNumberString;
+        if(assemblyInstruction.matches("[a-zA-Z]")){
+            addressNumberString = labelMap.get(assemblyInstruction.substring(1)).toString();
+        }
+        else{
+            addressNumberString = assemblyInstruction.replaceAll("[^0-9]", "");
+        }
         try {
-            addressNumber = Integer.parseInt(assemblyInstruction.replaceAll("[^0-9]", ""));
+            addressNumber = Integer.parseInt(addressNumberString);
         }
         catch(NumberFormatException e) {
             addressNumber = 0;
@@ -122,6 +132,27 @@ public class Parser {
         for(String[] hash : compMapValues) {
             compMap.put(hash[0], hash[1]);
         }
+        labelMap.put("SCREEN", "16384");
+        labelMap.put("KBD", "24567");
+        for(int i = 0; i < 16; i++){
+            labelMap.put("R"+i,i);
+        }
+    }
+    private String cleanString(String input){
+        //go to uppercase
+        input = input.toUpperCase();
+        //remove whitespace
+        input.replaceAll("\\s+]", "");
+        //trunacate comments
+        char[] charArray = input.toCharArray();
+        StringBuilder output = new StringBuilder();
+        for(char c : charArray){
+            if(c == '/'){
+                return output.toString();
+            }
+            output.append(c);
+        }
+        return output.toString();
     }
 
 }
