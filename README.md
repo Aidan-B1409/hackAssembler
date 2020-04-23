@@ -7,7 +7,7 @@
 This project accepts a .asm Assembly file, written in the Hack assembler langage, and converts it to binary instructions to be executed by a CPU. 
 Written in Java, developed for the OSU-Cascades CS-271 Final Project.
 
-(How To Use)
+# (How To Use)
 
 
 0) Make sure your system is installed with the latest version of the Java 8 Runtime Executable. 
