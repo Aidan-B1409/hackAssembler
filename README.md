@@ -15,7 +15,8 @@ Written in Java, developed for the OSU-Cascades CS-271 Final Project.
 1) Put your .asm Assembly file into the directory of your Assembler jar file 
 
 2) Open Command Prompt and run the Assembler.jar file with the command 
-    java -jar cs271final.jar [fileName.asm]
+
+    >java -jar cs271final.jar [fileName.asm]
     
 giving the name of the Assembly file as an argument.
 
