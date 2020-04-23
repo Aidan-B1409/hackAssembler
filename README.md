@@ -18,6 +18,6 @@ Written in Java, developed for the OSU-Cascades CS-271 Final Project.
 
     >java -jar cs271final.jar [fileName.asm]
     
-giving the name of the Assembly file as an argument.
+    giving the name of the Assembly file as an argument.
 
 3) Your .hack binary file will be generated in the same directory. 
